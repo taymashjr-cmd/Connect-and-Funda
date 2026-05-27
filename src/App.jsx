@@ -10,7 +10,7 @@ const IMG_STUDENTS_STUDY = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
 
 import kidsHero from "./assets/kids.jpeg";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID_HERE/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywSAVIdNyd4hiPAaDNzr034sjCWi_9J4cYY_Z2SOr-n5OafncciJpPqvtaskhgHMmm/exec";
 
 const NAVY        = "#3D4B66";
 const NAVY_DEEP   = "#2A3552";
@@ -148,35 +148,114 @@ const H1 = ({ children, style={} }) => (
 );
 
 const VIDEOS = [
-  { id: "teaser",    title: "Referral Partnership Teaser",       desc: "60s · The opportunity in one minute",         tone: "primary" },
-  { id: "mockup",    title: "App Mockup Demo",                   desc: "90s · See the FundaGuide AI tutor in action", tone: "secondary" },
-  { id: "matific",   title: "Matific Maths · Award-winning",     desc: "Gamified Maths for Grades 4–9",               tone: "partner" },
-  { id: "reading",   title: "Readability · AI Reading Tutor",    desc: "Grades 0–6 voice-recognition reading",        tone: "partner" },
-  { id: "fundaguide",title: "FundaGuide AI · 24/7 Tutor",        desc: "CAPS-aligned Socratic AI tutor",              tone: "partner" },
+  {
+    id: "teaser",
+    title: "Referral Partnership Teaser",
+    desc: "60s · The opportunity in one minute",
+    tone: "primary",
+
+    // Dropbox direct video
+    url: "https://www.dropbox.com/scl/fi/uk1xi3jyr77o9bxog5q1v/Connect-Draft-6.mp4?rlkey=id0lgt7n3pgut606fdp4j4w87&raw=1"
+  },
+
+  {
+    id: "mockup",
+    title: "App Mockup Demo",
+    desc: "90s · See the FundaGuide AI tutor in action",
+    tone: "secondary",
+
+    // Vimeo embed
+    url: "https://player.vimeo.com/video/667528969"
+  },
+
+  {
+    id: "matific",
+    title: "Matific Maths · Award-winning",
+    desc: "Gamified Maths for Grades 4–9",
+    tone: "partner",
+
+    // Vimeo embed
+    url: "https://player.vimeo.com/video/1192649823"
+  },
 ];
 
-const VideoBlock = ({ title, desc, tone="primary" }) => {
-  const bg = tone === "primary" ? `linear-gradient(135deg, ${ORANGE} 0%, ${ORANGE_DARK} 100%)`
-           : tone === "secondary" ? `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_DEEP} 100%)`
-           : "linear-gradient(135deg, #1A2744 0%, #2d3f6e 100%)";
+const VideoBlock = ({ title, desc, tone = "primary", url }) => {
+  const bg =
+    tone === "primary"
+      ? `linear-gradient(135deg, ${ORANGE} 0%, ${ORANGE_DARK} 100%)`
+      : tone === "secondary"
+      ? `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_DEEP} 100%)`
+      : "linear-gradient(135deg, #1A2744 0%, #2d3f6e 100%)";
+
   return (
-    <div style={{ borderRadius:14, overflow:"hidden", background:bg, position:"relative", cursor:"pointer" }}>
-      <div style={{ aspectRatio:"16/9", display:"flex", flexDirection:"column",
-        alignItems:"center", justifyContent:"center", gap:10, padding:18 }}>
-        <div style={{ width:52, height:52, borderRadius:"50%",
-          background:tone==="primary" ? "white" : ORANGE,
-          color: tone==="primary" ? ORANGE : "white",
-          display:"flex", alignItems:"center", justifyContent:"center",
-          fontSize:18, boxShadow:`0 0 0 8px rgba(255,255,255,0.15)` }}>▶</div>
-        <div style={{ textAlign:"center" }}>
-          <div style={{ color:"white", fontWeight:800, fontSize:13, fontFamily:MONTSERRAT, lineHeight:1.2 }}>{title}</div>
-          <div style={{ color:"rgba(255,255,255,0.75)", fontSize:11, marginTop:4, fontFamily:OPEN_SANS }}>{desc}</div>
+    <div
+      style={{
+        borderRadius: 14,
+        overflow: "hidden",
+        background: bg,
+      }}
+    >
+      {/* VIDEO */}
+      <div
+        style={{
+          width: "100%",
+          aspectRatio: "16/9",
+          background: "#000",
+        }}
+      >
+        {url.includes("dropbox") ? (
+          <video
+            controls
+            playsInline
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          >
+            <source src={url} type="video/mp4" />
+          </video>
+        ) : (
+          <iframe
+            width="100%"
+            height="100%"
+            src={url}
+            title={title}
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            style={{
+              border: "none",
+            }}
+          ></iframe>
+        )}
+      </div>
+
+      {/* TEXT */}
+      <div style={{ padding: 16 }}>
+        <div
+          style={{
+            color: "white",
+            fontWeight: 800,
+            fontSize: 14,
+          }}
+        >
+          {title}
+        </div>
+
+        <div
+          style={{
+            color: "rgba(255,255,255,0.75)",
+            fontSize: 12,
+            marginTop: 4,
+          }}
+        >
+          {desc}
         </div>
       </div>
     </div>
   );
 };
-
 export default function App() {
   const [step, setStep] = useState("landing");
   const [submitting, setSubmitting] = useState(false);
@@ -207,38 +286,58 @@ export default function App() {
     form.email && form.province && form.phase && form.consent &&
     (form.interest_referral || form.interest_bulksms || form.interest_info);
 
-  const handleSubmit = async () => {
-    if (!canSubmit) return;
-    setSubmitting(true); setError("");
-    const payload = {
-      timestamp: new Date().toISOString(),
-      institution: form.institution,
-      principalName: `${form.title} ${form.principalName}`,
-      cellphone: form.cellphone, email: form.email,
-      location: [form.city, form.province].filter(Boolean).join(", "),
-      emis: form.emis || "—", enrolment: form.enrolment || "—",
-      phase: form.phase, curriculum: form.curriculum || "—",
-      interests: [
-        form.interest_referral && "Referral Partner",
-        form.interest_bulksms && "Bulk SMS",
-        form.interest_info && "More Info",
-      ].filter(Boolean).join(", "),
-      readiness: form.readiness || "—",
-      currentComms: form.currentComms || "—",
-      heardFrom: form.heardFrom || "—",
-      comments: form.comments || "—",
-      revenueEstimate: rev ? `${rev.annual}/yr (${rev.qtr}/qtr)` : "—",
+    const handleSubmit = async () => {
+      if (!canSubmit) return;
+    
+      setSubmitting(true);
+      setError("");
+    
+      const payload = {
+        timestamp: new Date().toISOString(),
+        institution: form.institution,
+        principalName: `${form.title} ${form.principalName}`,
+        cellphone: form.cellphone,
+        email: form.email,
+        location: [form.city, form.province].filter(Boolean).join(", "),
+        emis: form.emis || "—",
+        enrolment: form.enrolment || "—",
+        phase: form.phase,
+        curriculum: form.curriculum || "—",
+        interests: [
+          form.interest_referral && "Referral Partner",
+          form.interest_bulksms && "Bulk SMS",
+          form.interest_info && "More Info",
+        ].filter(Boolean).join(", "),
+        readiness: form.readiness || "—",
+        currentComms: form.currentComms || "—",
+        heardFrom: form.heardFrom || "—",
+        comments: form.comments || "—",
+        revenueEstimate: rev
+          ? `${rev.annual}/yr (${rev.qtr}/qtr)`
+          : "—",
+      };
+    
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload)
+        });
+    
+        setStep("success");
+    
+      } catch (e) {
+        setError(
+          "Connection issue — please try again or WhatsApp us on 082 953 5091."
+        );
+    
+      } finally {
+        setSubmitting(false);
+      }
     };
-    try {
-      await fetch(GOOGLE_SCRIPT_URL, { method:"POST", mode:"no-cors",
-        headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
-      setStep("success");
-    } catch(e) {
-      if (GOOGLE_SCRIPT_URL.includes("YOUR_DEPLOYMENT_ID_HERE")) setStep("success");
-      else setError("Connection issue — please try again or WhatsApp us on 082 953 5091.");
-    } finally { setSubmitting(false); }
-  };
-
   // ── PLANS MODAL ──────────────────────────────────────────────────────────────
   const PlansModal = () => (
     <div onClick={() => setShowPlans(false)}
@@ -758,11 +857,23 @@ export default function App() {
           <div style={{ fontSize:13, color:"#64748b", fontFamily:OPEN_SANS, marginBottom:14 }}>
             Five short videos covering the opportunity, the app, and our content partners
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:20 }}>
-            {VIDEOS.map(v => (
-              <VideoBlock key={v.id} title={v.title} desc={v.desc} tone={v.tone} />
-            ))}
-          </div>
+          <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+    gap: 20,
+  }}
+>
+  {VIDEOS.map((video) => (
+    <VideoBlock
+      key={video.id}
+      title={video.title}
+      desc={video.desc}
+      tone={video.tone}
+      url={video.url}
+    />
+  ))}
+</div>
 
           {/* ─── WHAT LEARNERS GET ─── */}
           <div style={{ background:"white", border:`2px solid ${NAVY}`, borderRadius:16, padding:24, marginBottom:20,
@@ -1006,4 +1117,4 @@ export default function App() {
       </div>
     </>
   );
-}
+};
