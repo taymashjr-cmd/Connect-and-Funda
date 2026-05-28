@@ -1094,6 +1094,8 @@ export default function App() {
           </div>
 
           {/* ─── FOOTER ─── */}
+
+          
           <div style={{ textAlign:"center", paddingBottom:40, borderTop:"1px solid #e2e8f0", paddingTop:22 }}>
             <img src={LOGO_DARK} alt="Connect+Funda Mobile"
               style={{ height:150, margin:"0 auto 10px", display:"block" }} />
@@ -1108,6 +1110,26 @@ export default function App() {
               <a href="https://www.connectandfunda.co.za" target="_blank" rel="noreferrer"
                 style={{ color:ORANGE, textDecoration:"none" }}>connectandfunda.co.za</a>
             </div>
+            <a
+  href="/CF_School Referra Partnership Explainer.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button
+    style={{
+      background: "#ff6600",
+      color: "#fff",
+      padding: "12px 24px",
+      borderRadius: "10px",
+      border: "none",
+      cursor: "pointer"
+    }}
+  >
+    Download PDF
+  </button>
+</a>
+
+
             <div style={{ fontSize:11, color:"#94a3b8", marginTop:6, fontFamily:OPEN_SANS, lineHeight:1.6 }}>
               Enthucate Tech (Pty) Ltd t/a Connect+Funda Mobile · MVNO on the Cell C network<br />
               <strong>SIM cards are not yet on sale — public availability from mid-June 2026</strong> · Terms & conditions apply
