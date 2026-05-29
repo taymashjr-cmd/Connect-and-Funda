@@ -159,24 +159,25 @@ const VIDEOS = [
   },
 
   {
-    id: "mockup",
-    title: "App Mockup Demo",
-    desc: "90s · See the FundaGuide AI tutor in action",
+    id: "Funda Guide AI",
+    title: "Funda Guide AI",
+    desc: "24/7 CAPS & IEB-aligned AI tutor via app or WhatsApp. Basic tier FREE on all plans",
+    tone: "partner",
+
+    // Vimeo embed
+    url: "https://player.vimeo.com/video/1196619870"
+  },
+
+  {
+    id: "Readability Tutor",
+    title: "Readability Tutor",
+    desc: "Grade 0-6 Reading",
     tone: "secondary",
 
     // Vimeo embed
     url: "https://player.vimeo.com/video/667528969"
   },
 
-  {
-    id: "matific",
-    title: "Matific Maths · Award-winning",
-    desc: "Gamified Maths for Grades 4–9",
-    tone: "partner",
-
-    // Vimeo embed
-    url: "https://player.vimeo.com/video/1192649823"
-  },
 ];
 
 const VideoBlock = ({ title, desc, tone = "primary", url }) => {
