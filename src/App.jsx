@@ -169,6 +169,16 @@ const VIDEOS = [
   },
 
   {
+    id: "Matific Maths · Award-winning",
+    title: "Matific",
+    desc: "Gamified Maths for Grades 4–9",
+    tone: "partner",
+
+    // Vimeo embed
+    url: "https://player.vimeo.com/video/1192649823?share=copy&fl=sv&fe=ci"
+  },
+
+  {
     id: "Readability Tutor",
     title: "Readability Tutor",
     desc: "Grade 0-6 Reading",
