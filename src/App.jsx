@@ -165,7 +165,7 @@ const VIDEOS = [
     tone: "partner",
 
     // Vimeo embed
-    url: "https://player.vimeo.com/video/1196619870"
+    url: "https://vimeo.com/1202080167?share=copy&fl=sv&fe=ci"
   },
 
   {
