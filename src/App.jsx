@@ -165,7 +165,7 @@ const VIDEOS = [
     tone: "partner",
 
     // Vimeo embed
-    url: "https://vimeo.com/1202080167?share=copy&fl=sv&fe=ci"
+    url: "https://vimeo.com/reviews/1fb6e196-8f05-449c-9511-e0946825df34/videos/1202080167"
   },
 
   {
