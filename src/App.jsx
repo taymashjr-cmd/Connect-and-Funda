@@ -163,9 +163,7 @@ const VIDEOS = [
     title: "Funda Guide AI",
     desc: "24/7 CAPS & IEB-aligned AI tutor via app or WhatsApp. Basic tier FREE on all plans",
     tone: "partner",
-
-    // Vimeo embed
-    url: "https://vimeo.com/1202080167"
+    url: "https://player.vimeo.com/video/1202080167"
   },
 
   {
